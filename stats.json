@@ -1,27 +1,36 @@
 {
-  "updated": "2026-10-26T05:52:28+00:00",
+  "updated": "2026-10-26T06:18:18+00:00",
   "platforms": {
+    "instagram": {
+      "followers": 895,
+      "recent_views": 133772,
+      "recent_interactions": 8040,
+      "engagement_rate": 6.01,
+      "posts_counted": 20,
+      "stale": false,
+      "fetched": "2026-10-26T06:18:18+00:00"
+    },
     "tiktok": {
       "followers": 5267,
-      "recent_views": 1007500,
-      "recent_interactions": 77341,
+      "recent_views": 1007894,
+      "recent_interactions": 77376,
       "engagement_rate": 7.68,
       "posts_counted": 20,
       "stale": false,
-      "fetched": "2026-10-26T05:52:28+00:00"
+      "fetched": "2026-10-26T06:18:18+00:00"
     }
   },
   "totals": {
-    "followers": 5267,
-    "recent_views": 1007500,
-    "engagement_rate": 7.68
+    "followers": 6162,
+    "recent_views": 1141666,
+    "engagement_rate": 7.48
   },
   "history": [
     {
       "date": "2026-10-26",
-      "followers": 5267,
-      "recent_views": 1007500,
-      "engagement_rate": 7.68
+      "followers": 6162,
+      "recent_views": 1141666,
+      "engagement_rate": 7.48
     }
   ]
 }
