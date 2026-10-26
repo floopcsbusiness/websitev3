@@ -1,17 +1,27 @@
 {
-  "updated": "2026-10-26T03:03:50+00:00",
-  "platforms": {},
+  "updated": "2026-10-26T03:53:42+00:00",
+  "platforms": {
+    "tiktok": {
+      "followers": 5263,
+      "recent_views": 1005420,
+      "recent_interactions": 77126,
+      "engagement_rate": 7.67,
+      "posts_counted": 20,
+      "stale": false,
+      "fetched": "2026-10-26T03:53:42+00:00"
+    }
+  },
   "totals": {
-    "followers": 0,
-    "recent_views": 0,
-    "engagement_rate": null
+    "followers": 5263,
+    "recent_views": 1005420,
+    "engagement_rate": 7.67
   },
   "history": [
     {
       "date": "2026-10-26",
-      "followers": 0,
-      "recent_views": 0,
-      "engagement_rate": null
+      "followers": 5263,
+      "recent_views": 1005420,
+      "engagement_rate": 7.67
     }
   ]
 }
