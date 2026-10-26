@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Channel stats</title>
+<style>
+  :root {
+    --bg: #101014;
+    --card: #1b1b22;
+    --text: #f2f2f5;
+    --muted: #9a9aa8;
+    --accent: #ff4d8d;
+    --warn: #f5a524;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  body { padding: 16px; }
+  .wrap { max-width: 960px; margin: 0 auto; }
+  .totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px; margin-bottom: 16px; }
+  .platforms { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; }
+  .card h2 { margin: 0 0 12px; font-size: 15px; font-weight: 600; display: flex;
+    justify-content: space-between; align-items: center; }
+  .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+  .big { font-size: 28px; font-weight: 700; margin-top: 4px; }
+  .row { display: flex; justify-content: space-between; padding: 6px 0;
+    border-top: 1px solid #2a2a33; font-size: 14px; }
+  .row span:first-child { color: var(--muted); }
+  .stale { color: var(--warn); font-size: 11px; font-weight: 600; }
+  .spark { width: 100%; height: 48px; margin-top: 10px; }
+  .foot { color: var(--muted); font-size: 12px; margin-top: 14px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap" id="app">Loading stats…</div>
+
+<script>
+const NAMES = { youtube: "YouTube", instagram: "Instagram", tiktok: "TikTok" };
+
+const num = n => n == null ? "n/a" :
+  new Intl.NumberFormat("en", { notation: n >= 10000 ? "compact" : "standard",
+                                maximumFractionDigits: 1 }).format(n);
+const pct = n => n == null ? "n/a" : n.toFixed(1) + "%";
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function statBlock(label, value) {
+  const c = el("div", "card");
+  c.append(el("div", "label", label), el("div", "big", value));
+  return c;
+}
+
+function row(label, value) {
+  const r = el("div", "row");
+  r.append(el("span", null, label), el("span", null, value));
+  return r;
+}
+
+function sparkline(history) {
+  const pts = history.map(h => h.followers).filter(v => typeof v === "number");
+  if (pts.length < 2) return null;
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", "0 0 200 48");
+  svg.setAttribute("preserveAspectRatio", "none");
+  svg.setAttribute("class", "spark");
+  const min = Math.min(...pts), max = Math.max(...pts), span = max - min || 1;
+  const d = pts.map((v, i) =>
+    `${(i / (pts.length - 1) * 200).toFixed(1)},${(44 - (v - min) / span * 40).toFixed(1)}`).join(" ");
+  const line = document.createElementNS(ns, "polyline");
+  line.setAttribute("points", d);
+  line.setAttribute("fill", "none");
+  line.setAttribute("stroke", "#ff4d8d");
+  line.setAttribute("stroke-width", "2");
+  line.setAttribute("vector-effect", "non-scaling-stroke");
+  svg.append(line);
+  return svg;
+}
+
+function render(data) {
+  const app = document.getElementById("app");
+  app.textContent = "";
+
+  const t = data.totals || {};
+  const totals = el("div", "totals");
+  totals.append(
+    statBlock("Total followers", num(t.followers)),
+    statBlock("Views (recent posts)", num(t.recent_views)),
+    statBlock("Engagement", pct(t.engagement_rate))
+  );
+  app.append(totals);
+
+  const grid = el("div", "platforms");
+  for (const [key, p] of Object.entries(data.platforms || {})) {
+    const card = el("div", "card");
+    const h = el("h2", null, NAMES[key] || key);
+    if (p.stale) h.append(el("span", "stale", "OUT OF DATE"));
+    card.append(h,
+      row("Followers", num(p.followers)),
+      row("Views (last " + (p.posts_counted ?? "?") + " posts)", num(p.recent_views)),
+      row("Engagement", pct(p.engagement_rate)));
+    grid.append(card);
+  }
+  app.append(grid);
+
+  const spark = sparkline(data.history || []);
+  if (spark) {
+    const c = el("div", "card");
+    c.style.marginTop = "12px";
+    c.append(el("div", "label", "Total followers over time"), spark);
+    app.append(c);
+  }
+
+  const when = new Date(data.updated);
+  app.append(el("div", "foot",
+    "Updated " + when.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })));
+}
+
+fetch("stats.json?ts=" + Date.now())
+  .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+  .then(render)
+  .catch(() => { document.getElementById("app").textContent = "Stats aren’t available right now."; });
+</script>
+</body>
+</html>

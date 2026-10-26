@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok authorization</title>
+<style>
+  body { background: #101014; color: #f2f2f5; font-family: system-ui, sans-serif;
+         max-width: 640px; margin: 48px auto; padding: 0 16px; }
+  code { display: block; background: #1b1b22; padding: 14px; border-radius: 10px;
+         word-break: break-all; margin: 12px 0; user-select: all; }
+  .muted { color: #9a9aa8; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>TikTok authorization</h1>
+<div id="out">Waiting…</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const out = document.getElementById("out");
+  out.textContent = "";
+  function add(tag, text, cls) {
+    const e = document.createElement(tag);
+    e.textContent = text;
+    if (cls) e.className = cls;
+    out.append(e);
+  }
+  if (p.get("code")) {
+    add("p", "Copy this code and paste it into the terminal where get_tiktok_token.py is running:");
+    add("code", p.get("code"));
+    add("p", "It expires quickly, so do it now. You can close this tab afterwards.", "muted");
+  } else if (p.get("error")) {
+    add("p", "TikTok returned an error: " + p.get("error"));
+    add("p", p.get("error_description") || "", "muted");
+  } else {
+    add("p", "No code found. Start from the link the helper script printed.");
+  }
+</script>
+</body>
+</html>
