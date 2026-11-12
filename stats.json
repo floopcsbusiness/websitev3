@@ -1,38 +1,38 @@
 {
-  "updated": "2026-11-11T18:25:25+00:00",
+  "updated": "2026-11-12T18:43:44+00:00",
   "platforms": {
     "youtube": {
-      "followers": 230,
-      "recent_views": 94425,
-      "recent_interactions": 1241,
+      "followers": 229,
+      "recent_views": 94717,
+      "recent_interactions": 1245,
       "engagement_rate": 1.31,
       "posts_counted": 8,
       "stale": false,
-      "fetched": "2026-11-11T18:25:25+00:00"
+      "fetched": "2026-11-12T18:43:44+00:00"
     },
     "instagram": {
       "followers": 896,
-      "recent_views": 138080,
-      "recent_interactions": 7905,
-      "engagement_rate": 5.72,
+      "recent_views": 138256,
+      "recent_interactions": 7916,
+      "engagement_rate": 5.73,
       "posts_counted": 20,
       "stale": false,
-      "fetched": "2026-11-11T18:25:25+00:00"
+      "fetched": "2026-11-12T18:43:44+00:00"
     },
     "tiktok": {
-      "followers": 5729,
-      "recent_views": 1595675,
-      "recent_interactions": 124405,
-      "engagement_rate": 7.8,
+      "followers": 5772,
+      "recent_views": 1661216,
+      "recent_interactions": 130555,
+      "engagement_rate": 7.86,
       "posts_counted": 20,
       "stale": false,
-      "fetched": "2026-11-11T18:25:25+00:00"
+      "fetched": "2026-11-12T18:43:44+00:00"
     }
   },
   "totals": {
-    "followers": 6855,
-    "recent_views": 1828180,
-    "engagement_rate": 7.31
+    "followers": 6897,
+    "recent_views": 1894189,
+    "engagement_rate": 7.38
   },
   "history": [
     {
@@ -136,6 +136,12 @@
       "followers": 6855,
       "recent_views": 1828180,
       "engagement_rate": 7.31
+    },
+    {
+      "date": "2026-11-12",
+      "followers": 6897,
+      "recent_views": 1894189,
+      "engagement_rate": 7.38
     }
   ]
 }
